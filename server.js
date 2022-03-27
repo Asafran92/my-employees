@@ -34,3 +34,19 @@ function director() {
       }
     });
 }
+function createEmployee() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "Employee First Name",
+      message: "What is the employees first name?",
+    },
+    {
+      type: "input",
+      name: "Employee Last Name",
+      message: "What is the employees last name?",
+    },
+  ]);
+  //Add then method and push new info to table
+  //Create a "do more" function once complete to cycle through add' q's
+}
