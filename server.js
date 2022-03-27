@@ -1,6 +1,10 @@
 const inquirer = require("inquirer");
+const Employee = require("../../module-10HW/lib/Employee");
 const db = require("./db");
+const Employee = require("./db/schema"); //not sure if this conn should be for line above
 require("console.table");
+
+const employeeAdditions = [];
 
 console.log("Welcome to the employee database");
 director();
@@ -35,20 +39,33 @@ function director() {
     });
 }
 function createEmployee() {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "Employee First Name",
-      message: "What is the employees first name?",
-    },
-    {
-      type: "input",
-      name: "Employee Last Name",
-      message: "What is the employees last name?",
-    },
-  ]);
-  //Add then method and push new info to table
-  //Create a "do more" function once complete to cycle through add' q's
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "employeeFirstName",
+        message: "What is the employees first name?",
+      },
+      {
+        type: "input",
+        name: "employeeLastName",
+        message: "What is the employees last name?",
+      },
+      {
+        type: "input",
+        name: "employeeRoleId",
+        message: "What is the employees role ID?",
+      },
+    ])
+    //Add then method and push new info to table
+    //Create a "do more" function once complete to cycle through add' q's
+    .then(({ employeeFirstName, employeeLastName, employeeRoleId }) => {
+      employeeAdditions.push(
+        new Employee(employeeFirstName, employeeLastName, employeeRoleId)
+      );
+      console.log(employeeAdditions);
+      //add do more
+    });
 }
 
 function addRole() {
