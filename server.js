@@ -50,3 +50,37 @@ function createEmployee() {
   //Add then method and push new info to table
   //Create a "do more" function once complete to cycle through add' q's
 }
+
+function addRole() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "employee title",
+      message: "What is the title?",
+    },
+    {
+      type: "input",
+      name: "employee salary",
+      message: "What is the employees salary?",
+    },
+    {
+      type: "input",
+      name: "employee department ID",
+      message: "What is the employees department ID?",
+    },
+  ]);
+  //Add then method and push new info to table
+  //Create a "do more" function once complete to cycle through add' q's
+}
+
+function addDepartment() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "employee title",
+      message: "What is the title?",
+    },
+  ]);
+  //Add then method and push new info to table
+  //Create a "do more" function once complete to cycle through add' q's
+}
