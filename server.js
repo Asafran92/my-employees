@@ -1,10 +1,6 @@
 const inquirer = require("inquirer");
-const Employee = require("../../module-10HW/lib/Employee");
 const db = require("./db");
-const Employee = require("./db/schema"); //not sure if this conn should be for line above
 require("console.table");
-
-const employeeAdditions = [];
 
 console.log("Welcome to the employee database");
 director();
@@ -19,53 +15,79 @@ function director() {
           "View all employees",
           "View all departments",
           "View all roles",
+          "Add a Department",
         ],
       },
     ])
     .then(({ director }) => {
       switch (director) {
         case "View all employees":
-          console.log("view all employees");
+          viewEmployees();
           break;
         case "View all departments":
-          console.log("View all departments");
+          viewDepartments();
           break;
         case "View all roles":
-          console.log("View all roles");
+          viewRoles();
+          break;
+        case "Add a Department":
+          addDepartment();
           break;
         default:
           director();
       }
     });
 }
-function createEmployee() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "employeeFirstName",
-        message: "What is the employees first name?",
-      },
-      {
-        type: "input",
-        name: "employeeLastName",
-        message: "What is the employees last name?",
-      },
-      {
-        type: "input",
-        name: "employeeRoleId",
-        message: "What is the employees role ID?",
-      },
-    ])
-    //Add then method and push new info to table
-    //Create a "do more" function once complete to cycle through add' q's
-    .then(({ employeeFirstName, employeeLastName, employeeRoleId }) => {
-      employeeAdditions.push(
-        new Employee(employeeFirstName, employeeLastName, employeeRoleId)
-      );
-      console.log(employeeAdditions);
-      //add do more
+function viewEmployees() {
+  db.findAllEmployees()
+    .then(([employees]) => {
+      console.table(employees);
+    })
+    .then(() => {
+      director();
     });
+}
+
+function viewRoles() {
+  db.findAllRoles()
+    .then(([roles]) => {
+      console.table(roles);
+    })
+    .then(() => {
+      director();
+    });
+}
+
+function viewDepartments() {
+  db.findAllDepartments()
+    .then(([departments]) => {
+      console.table(departments);
+    })
+    .then(() => {
+      director();
+    });
+}
+
+function createEmployee() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "employeeFirstName",
+      message: "What is the employees first name?",
+    },
+    {
+      type: "input",
+      name: "employeeLastName",
+      message: "What is the employees last name?",
+    },
+    {
+      type: "input",
+      name: "employeeRoleId",
+      message: "What is the employees role ID?",
+    },
+  ]);
+  //Add then method and push new info to table
+  //Create a "do more" function once complete to cycle through add' q's
 }
 
 function addRole() {
@@ -91,13 +113,23 @@ function addRole() {
 }
 
 function addDepartment() {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "employee title",
-      message: "What is the title?",
-    },
-  ]);
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is the department to add?",
+      },
+    ])
+    .then((department) => {
+      db.createDepartment(department)
+        .then(() => {
+          console.log(`Succesfully created ${department.name}`);
+        })
+        .then(() => {
+          director();
+        });
+    });
   //Add then method and push new info to table
   //Create a "do more" function once complete to cycle through add' q's
 }
