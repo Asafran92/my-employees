@@ -191,8 +191,6 @@ function addRole() {
           });
       });
   });
-  //Add then method and push new info to table
-  //Create a "do more" function once complete to cycle through add' q's
 }
 
 function addDepartment() {
@@ -213,6 +211,4 @@ function addDepartment() {
           director();
         });
     });
-  //Add then method and push new info to table
-  //Create a "do more" function once complete to cycle through add' q's
 }
